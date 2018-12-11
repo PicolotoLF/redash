@@ -54,9 +54,15 @@ function CounterRenderer($timeout) {
           if (targetColName) {
             $scope.targetValue = queryData[targetRowNumber][targetColName];
 
+            //TODO(picoloto): invert rule
             if ($scope.targetValue) {
-              $scope.delta = $scope.counterValue - $scope.targetValue;
-              $scope.trendPositive = $scope.delta >= 0;
+              if ($scope.visualization.options.invertTarget)
+                $scope.delta = $scope.counterValue - $scope.targetValue;
+                $scope.trendPositive = $scope.delta <= 0;
+              else {
+                $scope.delta = $scope.counterValue - $scope.targetValue;
+                $scope.trendPositive = $scope.delta >= 0;
+              }
             }
           } else {
             $scope.targetValue = null;
